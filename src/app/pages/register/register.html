@@ -1,0 +1,52 @@
+<div class="background-container">
+
+
+<div id="container" class="card">
+  <h1>Registrarse</h1>
+  <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)">
+    <div>
+      <label for="firstName">Nombre*</label>
+      <input id="firstName" name="firstName" type="text" ngModel #firstName="ngModel" required="true" autocomplete="name">
+      @if (firstName.invalid && !firstName.pristine) {
+        <p class="error">Debe colocar un nombre.</p>
+      }
+    </div>
+    <div>
+      <label for="lastName">Apellido*</label>
+      <input id="lastName" name="lastName" type="text" ngModel #lastName="ngModel" required="true" autocomplete="family-name">
+      @if (lastName.invalid && !lastName.pristine) {
+        <p class="error">Debe colocar un apellido.</p>
+      }
+    </div>
+    <div>
+      <label for="email">Correo electrónico*</label>
+      <input id="email" name="email" type="email" id="email" ngModel #email="ngModel" required="true" autocomplete="email">
+      @if (email.invalid && !email.pristine) {
+        <p class="error">Debe colocar un correo electrónico.</p>
+      }
+    </div>
+    <div>
+      <label for="password">Contraseña*</label>
+      <input id="password" name="password" type="password" ngModel #password="ngModel" minlength="4" autocomplete="new-password">
+      @if (password.invalid && !password.pristine) {
+        <p class="error">Debe colocar una contraseña de al menos 4 caracteres.</p>
+      }
+    </div>
+    <div>
+      <label for="password">Repite la contraseña*</label>
+      <input id="password2" name="password2" type="password" ngModel #password2="ngModel" minlength="4" autocomplete="new-password">
+      @if (password2.invalid && !password2.pristine) {
+        <p class="error">Debe colocar una contraseña de al menos 4 caracteres.</p>
+      }
+    </div>
+    <button>Iniciar sesión</button>
+    @if (errorRegister) {
+      <p class="error">Error indeterminado, intente nuevamente.</p>
+    } 
+    <p>Ya tenés cuenta? <a routerLink="/login">Inicia sesion</a>
+    </p>
+  </form>
+
+  <a routerLink="/">Home</a>
+</div>
+</div>

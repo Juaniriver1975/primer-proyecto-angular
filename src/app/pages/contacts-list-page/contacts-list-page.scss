@@ -1,0 +1,137 @@
+html, body { height: 100%; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:host {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #000, #001f5c, #0040ff);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, "Noto Sans", "Liberation Sans", sans-serif;
+  position: relative;
+}
+
+:host::before {
+  content: "";
+  position: fixed; inset: 0;
+  background: linear-gradient(180deg, #0a0a0a 0%, #0e1330 50%, #06102f 100%);
+  opacity: .9;
+  z-index: 0;
+}
+
+.contacts-card {
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 780px);
+  background: #0b0c10;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 28px 60px rgba(0,0,0,.55);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  border: 1px solid rgba(255,255,255,.06);
+  backdrop-filter: blur(2px);
+}
+
+.contacts-card > h1 {
+  text-align: center;
+  color: #f3f4f6;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+.contacts-list {
+  display: grid;
+  gap: 14px;
+}
+
+app-contact-list-item {
+  display: block;
+  border: 1px solid #2a2e38;
+  border-radius: 16px;
+  padding: 16px 18px;
+  background: #111318;
+  transition: transform .08s ease, filter .18s ease, border-color .18s ease, box-shadow .18s ease;
+  box-shadow: 0 2px 0 rgba(255,255,255,.04) inset, 0 1px 0 rgba(0,0,0,.6);
+}
+app-contact-list-item:hover {
+  filter: brightness(1.03);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px rgba(59,130,246,.35), 0 8px 22px rgba(0,0,0,.45);
+}
+app-contact-list-item:active { transform: translateY(1px); }
+
+/* Embellece el contenido interno del item (texto + acciones) */
+::ng-deep app-contact-list-item,
+::ng-deep app-contact-list-item * {
+  color: #e5e7eb;
+}
+
+::ng-deep app-contact-list-item a {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #1f6fff, #0b53d6);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .2px;
+  transition: transform .06s ease, filter .18s ease, box-shadow .18s ease;
+  box-shadow: 0 2px 0 rgba(255,255,255,.06) inset;
+}
+::ng-deep app-contact-list-item a:hover { filter: brightness(1.08); }
+::ng-deep app-contact-list-item a:active { transform: translateY(1px); }
+
+::ng-deep app-contact-list-item button {
+  margin-left: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #14151b;
+  border: 1px solid #ef4444;
+  color: #fecaca;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .06s ease, filter .18s ease, box-shadow .18s ease, background .18s ease;
+}
+::ng-deep app-contact-list-item button:hover {
+  background: #1a1b21;
+  filter: brightness(1.04);
+}
+::ng-deep app-contact-list-item button:active { transform: translateY(1px); }
+
+.empty-state {
+  color: #cbd5e1;
+  font-size: .95rem;
+  text-align: center;
+}
+.empty-state a { color:#60a5fa; text-decoration:none; font-weight:700; }
+.empty-state a:hover { text-decoration:underline; }
+
+.cta-new {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  margin-top: 2px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #0b63ff, #0032aa);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .3px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .06s ease, filter .2s ease;
+}
+.cta-new:hover { filter: brightness(1.08); }
+.cta-new:active { transform: translateY(1px); }
+
+/* Fuerza el texto de los contactos a blanco */
+::ng-deep app-contact-list-item {
+  color: #ffffff !important;
+}
+
+::ng-deep app-contact-list-item * {
+  color: #ffffff !important;
+}
