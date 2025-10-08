@@ -1,3 +1,4 @@
+<div class="contacts-card">
 @if(cargandoContacto){
   <p>Cargando contacto...</p>
 } @else if(!contacto) {
@@ -6,14 +7,26 @@
   <h1>{{contacto!.firstName}} {{contacto!.lastName}}</h1>
   <p>Email: {{contacto.email}}</p>
   <p>Teléfono: {{contacto.number}}</p>
-@if (contacto.isFavorite) {
-  <p>⭐</p>
-  <button (click)="toggleFavorite()">Desmarcar favorito</button>
-} @else {
-  <button (click)="toggleFavorite()">Marcar como favorito</button>
-}
+  @if (contacto.isFavorite) {
+    <p>⭐</p>
+    <button (click)="toggleFavorite()">Desmarcar favorito</button>
+  } @else {
+    <button (click)="toggleFavorite()">Marcar como favorito</button>
+  }
   <p>
-    <a [routerLink]="['/contacts', idContacto(), 'edit']">Editar</a>
+    <a [routerLink]="['/contacts',id(),'edit']">Editar</a>
   </p>
-  <button (click)="deleteContact()">Eliminar</button>
+  
+  <button (click)="deleteContact()" [disabled]="cargandoEliminar">
+    @if(cargandoEliminar){
+      Eliminando contacto...
+    } @else {
+      Eliminar
+    }
+  </button>
+  
+  @if(errorEliminar){
+    <p>Ocurrió un error al eliminar el contacto. Intente nuevamente.</p>
+  }
 }
+</div>

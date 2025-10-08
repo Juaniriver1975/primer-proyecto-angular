@@ -1,6 +1,6 @@
 <!-- Toda la parte de nuevo contacto luego irá en una nueva pestaña o en una ventana emergente. A elección. -->
 <div id="container" class="card">
- @if(idContacto()){
+ @if(id()){
    <h2>Editar contacto</h2>
 } @else { 
   <h2>Nuevo contacto</h2>
@@ -26,8 +26,8 @@
     <input id="email" name="email" type="email" ngModel maxlength="40">
   </div>
   <div>
-    <label for="favourite">Favorito</label>
-    <input id="favourite" name="isFavourite" type="checkbox" ngModel>
+    <label for="favorite">Favorito</label>
+    <input id="favorite" name="isFavorite" type="checkbox" ngModel>
   </div>
   <div>
     <label for="address">Direccion</label>
@@ -44,7 +44,7 @@
   @if (errorEnBack) {
     <p class="error">Error indeterminado, intente nuevamente.</p>
   } 
-  @if(idContacto()){
+  @if(id()){
     <button [disabled]="newContactForm.invalid">Editar</button>
   } @else { 
     <button [disabled]="newContactForm.invalid">Agregar</button>

@@ -1,0 +1,96 @@
+:host {
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #000, #001f5c, #0040ff);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, "Noto Sans", "Liberation Sans", sans-serif;
+    position: relative;
+}
+
+.contacts-card {
+    position: relative;
+    z-index: 1;
+    width: min(92vw, 780px);
+    background: #0b0c10;
+    padding: 28px;
+    border-radius: 20px;
+    box-shadow: 0 28px 60px rgba(0,0,0,.55);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    border: 1px solid rgba(255,255,255,.06);
+    backdrop-filter: blur(2px);
+}
+
+h1, p {
+    color: #e5e7eb;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: .3px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+button {
+    width: 100%;
+    padding: 12px 16px;
+    border: 0;
+    border-radius: 12px;
+    font-weight: 800;
+    letter-spacing: .3px;
+    cursor: pointer;
+    transition: transform .06s ease, filter .2s ease;
+    box-shadow: 0 8px 22px rgba(0,0,0,.45);
+}
+
+.contacts-card button {
+    background: linear-gradient(90deg, #1f6fff, #0b53d6);
+    color: #fff;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.contacts-card button:last-of-type {
+    background: #14151b;
+    border: 1px solid #ef4444;
+    color: #fecaca;
+}
+
+.contacts-card button:hover {
+    filter: brightness(1.08);
+}
+
+.contacts-card button:last-of-type:hover {
+    background: #1a1b21;
+    filter: brightness(1.04);
+}
+
+.contacts-card a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.contacts-card a:hover {
+    text-decoration: underline;
+}
+
+.contacts-card button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.contacts-card .error {
+    color: #ef4444;
+    font-size: .95rem;
+    text-align: center;
+    margin-top: 10px;
+}

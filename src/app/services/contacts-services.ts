@@ -10,23 +10,80 @@ export class ContactsService {
   readonly URL_BASE = "https://agenda-api.somee.com/api/contacts";
 
   /** Lista de contactos en memoria */
-  contacts:Contact[] = [];
+  contacts: Contact[] = [];
+
+  /**
+   * Obtiene todos los contactos del backend. 
+   * @param forceRefresh Fuerza la recarga desde la API, ignorando la caché.
+   */
+  async getAllContacts(forceRefresh = false): Promise<Contact[]> {
+    // Si la lista está vacía O se pide forzar la recarga, vamos a la API.
+    if (this.contacts.length === 0 || forceRefresh) {
+      try {
+        const res = await fetch(this.URL_BASE, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + this.authService.token
+          }
+        });
+
+        if (res.ok) {
+          this.contacts = await res.json();
+        } else {
+          console.error("Error al cargar los contactos:", res.status, res.statusText);
+          this.contacts = [];
+        }
+      } catch (error) {
+        console.error("Error de red al cargar contactos:", error);
+        this.contacts = [];
+      }
+    }
+    return this.contacts;
+  }
+
+  /**
+   * Obtiene un contacto por ID. Prioriza la caché local.
+   */
+  async getContactById(id:string | number){
+    const res = await fetch(this.URL_BASE+"/"+id,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer "+this.authService.token
+        }
+      })
+      if(res.ok){
+        const resJson:Contact = await res.json()
+        return resJson;
+      }
+      return null;
+  }
 
   /** Crea un contacto */
-  async createContact(nuevoContacto:NewContact) {
-    const res = await fetch(this.URL_BASE, 
-      {
-        method:"POST",
+  async createContact(nuevoContacto: NewContact): Promise<Contact | null> {
+    try {
+      const res = await fetch(this.URL_BASE, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer "+this.authService.token,
+          Authorization: "Bearer " + this.authService.token,
         },
         body: JSON.stringify(nuevoContacto)
       });
-    if(!res.ok) return;
-    const resContact:Contact = await res.json();
-    this.contacts.push(resContact);
-    return resContact;
+
+      if (!res.ok) {
+        console.error("Error en la API al crear contacto:", res.status, res.statusText);
+        return null;
+      }
+      const resContact: Contact = await res.json();
+      
+      // Actualizamos la caché local con el nuevo contacto
+      this.contacts.push(resContact);
+      return resContact;
+    } catch (error) {
+      console.error("Error de red al crear contacto:", error);
+      return null;
+    }
   }
 
   /** Elimina un contacto segun su ID */
@@ -62,38 +119,8 @@ export class ContactsService {
     return contact;
   }
 
-  /** Obtiene los contactos del backend */
-  async getContacts(){
-    const res = await fetch('https://agenda-api.somee.com/api/Contacts',
-      {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer "+this.authService.token
-        }
-      })
-      if(res.ok){
-        const resJson:Contact[] = await res.json()
-        this.contacts = resJson;
-      }
-  }
-
-  /** Obtiene un contacto del backend */
-  async getContactById(id:string | number){
-    const res = await fetch(this.URL_BASE+"/"+id,
-      {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer "+this.authService.token
-        }
-      })
-      if(res.ok){
-        const resJson:Contact = await res.json()
-        return resJson;
-      }
-      return null;
-  }
   /** Marca/desmarca un contacto como favorito */
-  async setFavourite(id:string | number ) {
+  async setFavorite(id:string | number ) {
     const res = await fetch(this.URL_BASE+"/"+id+"/favorite", 
       {
         method: "POST",
@@ -106,10 +133,10 @@ export class ContactsService {
     /** Edita la lista actual de contactos reemplazando sólamente el favorito del que editamos */
     this.contacts = this.contacts.map(contact => {
       if(contact.id === id) {
-        return updatedContact; // Use the updated object from the server
-      };//editado
+        return updatedContact; 
+      };
       return contact;
     });
-    return true;
+    return updatedContact;
   }
 }

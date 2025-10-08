@@ -14,13 +14,13 @@ export class NewEditContact implements OnInit {
   contactsService = inject(ContactsService);
   router = inject(Router)
   errorEnBack = false;
-  idContacto = input<string>();
+  id = input<string>();
   contactoBack:Contact | undefined = undefined;
   form = viewChild<NgForm>("newContactForm")
   
   async ngOnInit() {
-    if(this.idContacto()){
-      const contacto:Contact|null = await this.contactsService.getContactById(this.idContacto()!);
+    if(this.id()){
+      const contacto:Contact|null = await this.contactsService.getContactById(this.id()!);
       if(contacto){
         this.contactoBack = contacto;
         this.form()?.setValue({
@@ -29,7 +29,7 @@ export class NewEditContact implements OnInit {
           email: contacto.email,
           firstName:contacto.firstName,
           image:contacto.image,
-          isFavourite:contacto.isFavorite,
+          isFavorite:contacto.isFavorite,
           lastName: contacto.lastName,
           number: contacto.number
         })
@@ -39,28 +39,26 @@ export class NewEditContact implements OnInit {
 
   async handleFormSubmission(form:NgForm){
     this.errorEnBack = false;
-    const nuevoContacto: NewContact ={
-      firstName: form.value.firstName,
-      lastName: form.value.lastName,
-      address: form.value.address,
-      email: form.value.email,
-      image: form.value.image,
-      number: form.value.number,
-      company: form.value.company,
-      isFavorite: form.value.isFavorite,
-    }
+
+    // Crea un objeto temporal para la petición a la API
+    const { isFavorite, ...contactData } = form.value;
 
     let res;
-    if(this.idContacto()){
-      res = await this.contactsService.editContact({...nuevoContacto,id:this.contactoBack!.id});
+    if(this.id()){
+      res = await this.contactsService.editContact({...contactData,id:this.contactoBack!.id});
     } else {
-      res = await this.contactsService.createContact(nuevoContacto);
+      res = await this.contactsService.createContact(contactData);
     }
 
     if(!res) {
       this.errorEnBack = true;
       return
     };
+
+    if (isFavorite) {
+        await this.contactsService.setFavorite(res.id);
+      }
+    
     this.router.navigate(["/contacts",res.id]);
   }
 }
