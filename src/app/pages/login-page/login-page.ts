@@ -31,7 +31,7 @@ export class LoginPage {
     const ok = await this.authService.login(form.value);
 
     if (ok) {
-      this.router.navigate(['/contacts']);
+      this.router.navigate(['/']);
     } else {
       this.errorLogin = true;
       Swal.fire({

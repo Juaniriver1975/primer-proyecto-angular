@@ -42,7 +42,7 @@ export class ContactDetailsPage implements OnInit {
         this.cargandoEliminar = true; 
         const res = await this.contactService.deleteContact(this.contacto.id);
         if(res) {
-          this.router.navigate(['/contacts']); 
+          this.router.navigate(['/']); 
         } else {
           this.errorEliminar = true; 
         }

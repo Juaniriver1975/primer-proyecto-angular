@@ -1,4 +1,3 @@
-
 import { Routes } from '@angular/router';
 import { LoginPage } from './pages/login-page/login-page';
 import { ContactListPage } from './pages/contacts-list-page/contacts-list-page';
@@ -8,44 +7,37 @@ import { RegisterPage } from './pages/register/register';
 import { onlyPublicGuard } from './guards/only-public-guard-guard';
 import { onlyUserGuard } from './guards/only-user-guard-guard';
 import { NewEditContact } from './pages/new-edit-contact/new-edit-contact';
-import { PublicLayout } from './layouts/logged-layouts/public-layout/public-layout';
+
 export const routes: Routes = [
-  
     {
-        path: '',
-        component: PublicLayout,
-        canActivate: [onlyPublicGuard], 
-        children: [
-            { path: 'login', component: LoginPage },
-            { path: 'register', component: RegisterPage },
-        ]
+        path: "login",
+        component: LoginPage,
+        canActivate: [onlyPublicGuard]
     },
-   
     {
-        path: 'contacts', 
+        path: "register",
+        component: RegisterPage,
+        canActivate: [onlyPublicGuard]
+    },
+    {
+        path: "",
         component: LoggedLayout,
-        canActivate: [onlyUserGuard], 
+        canActivateChild: [onlyUserGuard],
         children: [
             {
-                path: '', 
+                path: "", 
                 component: ContactListPage
             }, {
-                path: 'new',
+                path: "contacts/new",
                 component: NewEditContact
             }, {
-                path: ':id/edit',
+                path: "contacts/:id/edit",
                 component: NewEditContact
             },
             {
-                path: ':id',
+                path: "contacts/:id",
                 component: ContactDetailsPage
             },
         ]
     },
-    
-    {
-        path: '',
-        redirectTo: '/contacts',
-        pathMatch: 'full'
-    }
 ];

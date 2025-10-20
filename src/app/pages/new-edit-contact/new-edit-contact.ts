@@ -1,3 +1,5 @@
+// src/app/pages/new-edit-contact/new-edit-contact.ts
+
 import { Component, inject, input, OnInit, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ContactsService } from '../../services/contacts-services';
@@ -17,32 +19,31 @@ export class NewEditContact implements OnInit {
   id = input<string>();
   contactoBack:Contact | undefined = undefined;
   form = viewChild<NgForm>("newContactForm")
-  
+
   async ngOnInit() {
     if(this.id()){
       const contacto:Contact|null = await this.contactsService.getContactById(this.id()!);
       if(contacto){
         this.contactoBack = contacto;
-        this.form()?.setValue({
-          address: contacto.address,
-          company: contacto.company,
-          email: contacto.email,
-          firstName:contacto.firstName,
-          image:contacto.image,
-          isFavorite:contacto.isFavorite,
-          lastName: contacto.lastName,
-          number: contacto.number
-        })
+
+        setTimeout(() => {
+          this.form()?.setValue({
+            address: contacto.address,
+            company: contacto.company,
+            email: contacto.email,
+            firstName:contacto.firstName,
+            image:contacto.image,
+            isFavorite:contacto.isFavorite,
+            lastName: contacto.lastName,
+            number: contacto.number
+          });
+        });
       }
     }
   }
 
-  // src/app/pages/new-edit-contact/new-edit-contact.ts
-
   async handleFormSubmission(form:NgForm){
     this.errorEnBack = false;
-
-    // Crea un objeto temporal para la petición a la API
     const { isFavorite, ...contactData } = form.value;
 
     let res;
@@ -66,7 +67,7 @@ export class NewEditContact implements OnInit {
       if (isFavorite) {
         await this.contactsService.setFavorite(res.id);
       }
-      this.router.navigate(['/contacts']);
+      this.router.navigate(['/']);
     }
   }
 }
