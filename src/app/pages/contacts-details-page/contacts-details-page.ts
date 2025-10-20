@@ -14,8 +14,8 @@ export class ContactDetailsPage implements OnInit {
   readonly contactService = inject(ContactsService);
   contacto: Contact | undefined;
   cargandoContacto = false;
-  cargandoEliminar = false; // Nueva variable de estado para el botón de eliminar
-  errorEliminar = false; // Nueva variable de estado para los errores de eliminación
+  cargandoEliminar = false; 
+  errorEliminar = false; 
   router = inject(Router);
 
   async ngOnInit() {

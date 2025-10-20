@@ -1,5 +1,3 @@
-// src/app/pages/new-edit-contact/new-edit-contact.ts
-
 import { Component, inject, input, OnInit, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ContactsService } from '../../services/contacts-services';

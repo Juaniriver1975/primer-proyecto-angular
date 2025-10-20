@@ -1,11 +1,9 @@
-// src/app/pages/login-page/login-page.ts
-
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { FormsModule, NgForm } from '@angular/forms';
-import Swal from 'sweetalert2'; // <-- Importa SweetAlert2
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login-page',
