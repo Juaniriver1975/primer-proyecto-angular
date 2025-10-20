@@ -30,25 +30,26 @@ export class ContactDetailsPage implements OnInit {
 
   async toggleFavorite(){
     if(this.contacto){
-      const updatedContact = await this.contactService.setFavorite(this.contacto.id);
-      if(updatedContact) this.contacto = updatedContact;
+      if (await this.contactService.setFavorite(this.contacto.id)) {
+        this.contacto.isFavorite = !this.contacto.isFavorite;
+      }
     }
   }
 
   async deleteContact(){
     if(this.contacto){
       try {
-        this.cargandoEliminar = true; // Inicia el estado de carga
+        this.cargandoEliminar = true; 
         const res = await this.contactService.deleteContact(this.contacto.id);
         if(res) {
-          this.router.navigate(['/']); // Redirecciona si la eliminación fue exitosa
+          this.router.navigate(['/contacts']); 
         } else {
-          this.errorEliminar = true; // Muestra un error si la respuesta no es OK
+          this.errorEliminar = true; 
         }
       } catch (error) {
-        this.errorEliminar = true; // Muestra un error si ocurre una excepción
+        this.errorEliminar = true; 
       } finally {
-        this.cargandoEliminar = false; // Finaliza el estado de carga
+        this.cargandoEliminar = false; 
       }
     }
   }

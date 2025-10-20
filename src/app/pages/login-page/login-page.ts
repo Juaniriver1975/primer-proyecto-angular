@@ -1,65 +1,47 @@
+// src/app/pages/login-page/login-page.ts
+
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { FormsModule, NgForm } from '@angular/forms';
+import Swal from 'sweetalert2'; // <-- Importa SweetAlert2
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [RouterModule, FormsModule,CommonModule],
+  imports: [RouterModule, FormsModule, CommonModule],
   templateUrl: './login-page.html',
-  styleUrls: ['./login-page.scss'] 
+  styleUrls: ['./login-page.scss']
 })
 export class LoginPage {
   authService = inject(Auth);
   router = inject(Router);
+
   errorLogin = false;
 
   async login(form: NgForm) {
     this.errorLogin = false;
 
+ 
     if (form.invalid) {
-      this.errorLogin = true;
       return;
     }
 
     const ok = await this.authService.login(form.value);
+
     if (ok) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/contacts']);
     } else {
       this.errorLogin = true;
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de Autenticación',
+        text: 'El correo electrónico o la contraseña son incorrectos. Por favor, intente de nuevo.',
+        background: '#1a1b21', 
+        color: '#e5e7eb',      
+        confirmButtonColor: '#3b82f6'
+      });
     }
   }
 }
-
-
-// import { Component, inject } from '@angular/core';
-// import { Router, RouterModule } from '@angular/router';
-// import { Auth } from '../../services/auth';
-// import { FormsModule, NgForm } from '@angular/forms';
-
-// @Component({
-//   selector: 'app-login-page',
-//   imports: [RouterModule,FormsModule],
-//   templateUrl: './login-page.html',
-//   styleUrl: './login-page.scss'
-// })
-// export class LoginPage {
-//   authService = inject(Auth)
-//   router = inject(Router)
-
-//   errorLogin = false;
-
-//   async login(form:NgForm){
-//     console.log(form.value)
-//     this.errorLogin = false;
-//     if(!form.value.email || !form.value.password){
-//       this.errorLogin = true;
-//       return
-//     }
-//     const loginResult = await this.authService.login(form.value);
-//     if(loginResult) this.router.navigate(["/"]);
-//     this.errorLogin = true;
-//   }
-// }

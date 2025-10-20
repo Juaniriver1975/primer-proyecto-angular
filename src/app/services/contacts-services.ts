@@ -9,15 +9,15 @@ export class ContactsService {
   authService = inject(Auth);
   readonly URL_BASE = "https://agenda-api.somee.com/api/contacts";
 
-  /** Lista de contactos en memoria */
+
   contacts: Contact[] = [];
 
   /**
-   * Obtiene todos los contactos del backend. 
+   * Obtiene todos los contactos del backend.
    * @param forceRefresh Fuerza la recarga desde la API, ignorando la caché.
    */
   async getAllContacts(forceRefresh = false): Promise<Contact[]> {
-    // Si la lista está vacía O se pide forzar la recarga, vamos a la API.
+  
     if (this.contacts.length === 0 || forceRefresh) {
       try {
         const res = await fetch(this.URL_BASE, {
@@ -41,9 +41,6 @@ export class ContactsService {
     return this.contacts;
   }
 
-  /**
-   * Obtiene un contacto por ID. Prioriza la caché local.
-   */
   async getContactById(id:string | number){
     const res = await fetch(this.URL_BASE+"/"+id,
       {
@@ -59,7 +56,6 @@ export class ContactsService {
       return null;
   }
 
-  /** Crea un contacto */
   async createContact(nuevoContacto: NewContact): Promise<Contact | null> {
     try {
       const res = await fetch(this.URL_BASE, {
@@ -77,7 +73,6 @@ export class ContactsService {
       }
       const resContact: Contact = await res.json();
       
-      // Actualizamos la caché local con el nuevo contacto
       this.contacts.push(resContact);
       return resContact;
     } catch (error) {
@@ -86,7 +81,6 @@ export class ContactsService {
     }
   }
 
-  /** Elimina un contacto segun su ID */
   async deleteContact(id:number){
     const res = await fetch(this.URL_BASE+"/"+id, 
       {
@@ -111,7 +105,7 @@ export class ContactsService {
         body: JSON.stringify(contact)
       });
     if(!res.ok) return;
-    /** Actualizo la lista de leads locales para dejar el lead que actualice actualizado */
+    
     this.contacts = this.contacts.map(oldContact =>{
       if(oldContact.id === contact.id) return contact;
       return oldContact
@@ -119,7 +113,6 @@ export class ContactsService {
     return contact;
   }
 
-  /** Marca/desmarca un contacto como favorito */
   async setFavorite(id:string | number ) {
     const res = await fetch(this.URL_BASE+"/"+id+"/favorite", 
       {
@@ -128,15 +121,6 @@ export class ContactsService {
           Authorization: "Bearer "+this.authService.token,
         },
       });
-    if(!res.ok) return;
-    const updatedContact = await res.json();//crea la constante updatedContact que contiene el contacto actualizado
-    /** Edita la lista actual de contactos reemplazando sólamente el favorito del que editamos */
-    this.contacts = this.contacts.map(contact => {
-      if(contact.id === id) {
-        return updatedContact; 
-      };
-      return contact;
-    });
-    return updatedContact;
+    return res.ok;
   }
 }

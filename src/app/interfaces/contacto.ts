@@ -7,7 +7,6 @@ export interface Contact {
   number: string,
   company: string,
   isFavorite : boolean,
-  // description : string,
   image : string,
 }
 export type NewContact = Omit<Contact, 'id'> 

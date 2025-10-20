@@ -37,6 +37,8 @@ export class NewEditContact implements OnInit {
     }
   }
 
+  // src/app/pages/new-edit-contact/new-edit-contact.ts
+
   async handleFormSubmission(form:NgForm){
     this.errorEnBack = false;
 
@@ -55,10 +57,16 @@ export class NewEditContact implements OnInit {
       return
     };
 
-    if (isFavorite) {
+    if (this.id()) {
+      if (isFavorite !== this.contactoBack!.isFavorite) {
         await this.contactsService.setFavorite(res.id);
       }
-    
-    this.router.navigate(["/contacts",res.id]);
+      this.router.navigate(['/contacts', res.id]);
+    } else {
+      if (isFavorite) {
+        await this.contactsService.setFavorite(res.id);
+      }
+      this.router.navigate(['/contacts']);
+    }
   }
 }

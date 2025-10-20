@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ContactListPage implements OnInit {
   ngOnInit(): void {
-    // Agregamos `true` para forzar la recarga de los contactos cada vez que se carga la página
+    
     this.contactsService.getAllContacts(true); 
   }
 
@@ -21,9 +21,7 @@ export class ContactListPage implements OnInit {
   contactsService = inject(ContactsService)
 
   handleContactDeleted(deletedContactId: number) {
-    // La eliminación ya se maneja en el servicio, solo refrescamos la vista si es necesario
-    // Para asegurar que la lista se actualice
-    // this.contactsService.getAllContacts(true);
+   
     console.log(`Contacto con ID ${deletedContactId} eliminado.`);
   }
 }

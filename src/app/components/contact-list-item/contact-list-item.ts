@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contact-list-item',
-  standalone: true, // Agregado para Angular 17+
+  standalone: true, 
   imports: [RouterModule],
   templateUrl: './contact-list-item.html',
   styleUrl: './contact-list-item.scss'
@@ -17,7 +17,7 @@ export class ContactListItem {
   
   contactsService = inject(ContactsService);
   
-  onDelete = output<number>(); // Define el emisor de eventos
+  onDelete = output<number>(); 
 
   async deleteContact() {
 

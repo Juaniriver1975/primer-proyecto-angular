@@ -1,32 +1,62 @@
-<div class="contacts-card">
-@if(cargandoContacto){
-  <p>Cargando contacto...</p>
-} @else if(!contacto) {
-  <p>No se encontró el contacto</p>
-} @else {
-  <h1>{{contacto!.firstName}} {{contacto!.lastName}}</h1>
-  <p>Email: {{contacto.email}}</p>
-  <p>Teléfono: {{contacto.number}}</p>
-  @if (contacto.isFavorite) {
-    <p>⭐</p>
-    <button (click)="toggleFavorite()">Desmarcar favorito</button>
+<div class="contact-details-card">
+  @if(cargandoContacto){
+    <p class="loading-message">Cargando contacto...</p>
+  } @else if(!contacto) {
+    <p class="not-found-message">No se encontró el contacto</p>
   } @else {
-    <button (click)="toggleFavorite()">Marcar como favorito</button>
-  }
-  <p>
-    <a [routerLink]="['/contacts',id(),'edit']">Editar</a>
-  </p>
-  
-  <button (click)="deleteContact()" [disabled]="cargandoEliminar">
-    @if(cargandoEliminar){
-      Eliminando contacto...
-    } @else {
-      Eliminar
+
+    <header class="card-header">
+      <img [src]="contacto.image || 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='" alt="Imagen de {{contacto.firstName}}" class="profile-image">
+      <div class="name-container">
+        <h1>{{contacto.firstName}} {{contacto.lastName}}</h1>
+        @if (contacto.isFavorite) {
+          <span class="favorite-badge" title="Contacto Favorito">⭐</span>
+        }
+      </div>
+    </header>
+
+    <section class="contact-info">
+      <div class="info-item">
+        <i class="bi bi-envelope-fill icon"></i>
+        <span>{{contacto.email || 'Email no especificado'}}</span>
+      </div>
+      <div class="info-item">
+        <i class="bi bi-telephone-fill icon"></i>
+        <span>{{contacto.number}}</span>
+      </div>
+       <div class="info-item">
+        <i class="bi bi-geo-alt-fill icon"></i>
+        <span>{{contacto.address || 'Dirección no especificada'}}</span>
+      </div>
+      <div class="info-item">
+        <i class="bi bi-building-fill icon"></i>
+        <span>{{contacto.company || 'Compañia no especificada'}}</span>
+      </div>
+    </section>
+
+    <section class="card-actions">
+      <button class="action-btn favorite-btn" (click)="toggleFavorite()">
+        <i class="bi" [class.bi-star-fill]="contacto.isFavorite" [class.bi-star]="!contacto.isFavorite"></i>
+        {{ contacto.isFavorite ? 'Quitar Favorito' : 'Marcar Favorito' }}
+      </button>
+
+      <a class="action-btn edit-btn" [routerLink]="['/contacts', id(), 'edit']">
+        <i class="bi bi-pencil-fill"></i>
+        Editar
+      </a>
+
+      <button class="action-btn delete-btn" (click)="deleteContact()" [disabled]="cargandoEliminar">
+        @if(cargandoEliminar){
+          <span class="spinner"></span> Eliminando...
+        } @else {
+          <i class="bi bi-trash-fill"></i>
+          Eliminar
+        }
+      </button>
+    </section>
+
+    @if(errorEliminar){
+      <p class="error-message">Ocurrió un error al eliminar el contacto.</p>
     }
-  </button>
-  
-  @if(errorEliminar){
-    <p>Ocurrió un error al eliminar el contacto. Intente nuevamente.</p>
   }
-}
 </div>

@@ -1,21 +1,18 @@
-
 html, body { height: 100%; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 
 body{
-  min-height: 100svh;              
-  display: grid;                   
+  min-height: 100svh;
+  display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #000, #001f5c, #0040ff);
   font-family: Arial, Helvetica, sans-serif;
 }
 
 
 .background-container{
-  position: fixed; inset: 0;       
+  position: fixed; inset: 0;
   display: grid; place-items: center;
-  background: linear-gradient(180deg, #050505, #00124a 50%, #000a40 100%);
 }
 
 form{
@@ -101,8 +98,8 @@ input:valid:focus {
 input:-moz-ui-invalid { box-shadow: none; }
 
 form:has(input:required:invalid) button[type="submit"] {
-  pointer-events: none;           
-  opacity: .6;                    
+  pointer-events: none;
+  opacity: .6;
   filter: grayscale(15%);
   cursor: not-allowed;
 }

@@ -1,3 +1,58 @@
-nav{
-    background-color: lightblue;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+
+
+nav {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  flex-shrink: 0; 
+}
+
+nav a,
+nav button {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease, filter .2s ease;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+nav a:hover,
+nav button:hover {
+  background-color: #222;
+  color: #fff;
+}
+
+nav a.active {
+  background: linear-gradient(90deg, #0b63ff, #0032aa);
+  color: #fff;
+
+}
+
+nav button {
+  margin-left: auto;
+  background: linear-gradient(90deg, #d32f2f, #b71c1c);
+  color: #fff;
+}
+
+nav button:hover {
+  filter: brightness(1.15);
 }

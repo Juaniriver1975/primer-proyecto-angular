@@ -1,21 +1,14 @@
+/* src/app/pages/new-edit-contact/new-edit-contact.scss */
+
 html, body { height: 100%; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :host {
-  min-height: 100svh;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #000, #001f5c, #0040ff);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, "Noto Sans", "Liberation Sans", sans-serif;
   position: relative;
-}
-
-:host::before {
-  content: "";
-  position: fixed; inset: 0;
-  background: linear-gradient(180deg, #0a0a0a 0%, #0e1330 50%, #06102f 100%);
-  opacity: .9;
-  z-index: 0;
+  padding: 2rem;
 }
 
 #container.card {
@@ -27,7 +20,6 @@ html, body { height: 100%; }
   border-radius: 20px;
   box-shadow: 0 28px 60px rgba(0,0,0,.55);
   border: 1px solid rgba(255,255,255,.06);
-  backdrop-filter: blur(2px);
 }
 
 #container.card > h2 {
@@ -49,8 +41,6 @@ form {
     grid-template-columns: 1fr 1fr;
     gap: 18px 18px;
   }
-  form > div { min-width: 0; }
-  form > .actions { grid-column: 1 / -1; }
 }
 
 form > div {
@@ -85,22 +75,6 @@ input:focus {
   background: #10131a;
 }
 
-input:disabled {
-  opacity: .7;
-  cursor: not-allowed;
-}
-
-input[required]:invalid.ng-dirty,
-input[required].ng-invalid.ng-touched {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239,68,68,.2);
-}
-
-input.ng-valid.ng-dirty {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34,197,94,.18);
-}
-
 input[type="checkbox"] {
   appearance: none;
   width: 42px;
@@ -129,12 +103,6 @@ input[type="checkbox"]::after {
 input[type="checkbox"]:checked {
   background: linear-gradient(90deg, #1f6fff, #0b53d6);
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59,130,246,.18);
-}
-
-input[type="checkbox"]:checked::after {
-  transform: translateX(16px);
-  background: #fff;
 }
 
 .error {
@@ -143,9 +111,26 @@ input[type="checkbox"]:checked::after {
   margin-top: 2px;
 }
 
-button {
-  width: 100%;
+/* --- ESTILOS AÑADIDOS Y MODIFICADOS --- */
+
+/* Contenedor para los botones */
+.form-actions {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
   margin-top: 8px;
+}
+
+/* En pantallas grandes, botones uno al lado del otro */
+@media (min-width: 680px) {
+  .form-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Botón principal (Agregar/Guardar) */
+button[type="submit"] {
+  width: 100%;
   padding: 12px 16px;
   border: 0;
   border-radius: 12px;
@@ -158,11 +143,10 @@ button {
   box-shadow: 0 8px 22px rgba(0,0,0,.45);
 }
 
-button:hover { filter: brightness(1.08); }
-button:active { transform: translateY(1px); }
+button[type="submit"]:hover { filter: brightness(1.08); }
+button[type="submit"]:active { transform: translateY(1px); }
 
-button[disabled],
-button[disabled]:hover {
+button[type="submit"][disabled] {
   pointer-events: none;
   opacity: .6;
   filter: grayscale(15%);
@@ -170,6 +154,28 @@ button[disabled]:hover {
   cursor: not-allowed;
 }
 
-@media (min-width: 680px) {
-  button { grid-column: 1 / -1; }
+.btn-secondary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #4b5563;
+  border-radius: 12px;
+  background: #1f2937;
+  color: #e5e7eb;
+  font-weight: 800;
+  letter-spacing: .3px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .06s ease, background-color .2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #374151;
+}
+
+.btn-secondary:active {
+  transform: translateY(1px);
 }

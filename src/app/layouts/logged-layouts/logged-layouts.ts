@@ -25,7 +25,6 @@ export class LoggedLayout {
       cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Aquí se llama a la función de logout del servicio
         this.authService.logout();
 
         Swal.fire(
